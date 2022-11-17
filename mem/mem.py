@@ -1,5 +1,6 @@
 import struct
 from typing import List
+import re
 
 
 class MemoryError(Exception):
@@ -40,11 +41,12 @@ class MEM:
 		self.mapfd = open(f"/proc/{pid}/maps", "r")
 
 		self.maps = []
-		for map in self.mapfd.read().strip().split("\n"):
-			range, rights, *_ = map.split(" ")
-			rights = [i for i in rights[:-1] if i != "-"]
-			range = [int(i, base=16) for i in range.split("-")]
-			self.maps.append([*range, rights])
+		for match in re.findall(r"([a-f0-9]+)-([a-f0-9]+) (...)", self.mapfd.read().strip()):
+			match[0] = int(match[0], base=16)
+			match[1] = int(match[1], base=16)
+			match[2] = [i for i in match[2] if i != "-"]
+
+			self.maps.append(match)
 
 	def addrValid(self, addr, size, right):
 		return any(addr in range(*_range[:-1]) and addr+size in range(*_range[:-1]) and right in _range[2] for _range in self.maps)
@@ -85,3 +87,6 @@ class MEM:
 
 	def writeUInt64(self, addr, value):
 		self.writeBytes(addr, struct.pack("Q", value))
+
+	def readString(self, addr) -> str:
+		return

@@ -1,6 +1,7 @@
 from mem import MEM
 
-PID = 32911
+PID = 40507
+
 
 mem = MEM(PID)
 
@@ -18,3 +19,7 @@ mem.writeInt64
 
 mem.readUInt64
 mem.writeUInt64
+
+# TODO
+mem.readString
+mem.writeString
