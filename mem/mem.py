@@ -61,7 +61,7 @@ class MEM:
 			if addr in range(*_range[:-1]) and addr + size not in range(*_range[:-1]):
 				return True
 			if right in _range[2]:
-				return True#
+				return True
 		return False
 
 	def readBytes(self, addr, size) -> List[Byte]:
