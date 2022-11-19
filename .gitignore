@@ -4,3 +4,4 @@ build
 *.egg-info
 .vscode
 monkeytype.sqlite3
+main.py
