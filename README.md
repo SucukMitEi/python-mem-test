@@ -7,7 +7,6 @@ mem is a Python package for memory editing with Python on Linux.
 1. `git clone https://github.com/SucukMitEi/python-mem-test.git`
 2. `cd python-mem-test`
 3. `pip install .`
-4. Done
 
 ## Usage
 
