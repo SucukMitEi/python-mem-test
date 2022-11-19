@@ -1,8 +1,10 @@
-from distutils.core import setup
+from setuptools import setup
 
-setup(name='mem',
-	  version='1.0',
-	  description='Python memory editing',
-	  author='SucukMitEi',
-	  packages=['mem'],
-	  )
+setup(
+	name="mem",
+	version="1.0",
+	description="Memory editing with python",
+	author="SucukMitEi",
+	packages=["mem"],
+	install_requires=["shutil"]
+)
