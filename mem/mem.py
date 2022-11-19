@@ -61,25 +61,35 @@ class MEM:
 
 	def addrValid(self, addr, size, right):
 		for _range in self.maps:
+			# check if address is in the map
 			if addr in range(*_range[:-1]) and addr + size not in range(*_range[:-1]):
 				return True
+
+			# check for rights
 			if right in _range[2]:
 				return True
 		return False
 
 	def readBytes(self, addr, size) -> List[Byte]:
-		# print(self.addrValid(addr, size, "r"))
+		# check if address `addr` is valid for reading `size` bytes
 		if not self.addrValid(addr, size, "r"):
 			raise MemoryError("You can not read this address.")
 
+		# set position to `addr`
 		self.memfd.seek(addr)
+
+		# read `size` bytes
 		return self.memfd.read(size)
 
 	def writeBytes(self, addr, content) -> None:
+		# check if address `addr` is valid for writing `size` bytes
 		if not self.addrValid(addr, len(content), "w"):
 			raise MemoryError("You can not read this address.")
 
+		# set position to `addr`
 		self.memfd.seek(addr)
+
+		# write `content` to memory
 		self.memfd.write(content)
 
 	def readInt32(self, addr) -> Int32:
@@ -107,7 +117,7 @@ class MEM:
 		self.writeBytes(addr, struct.pack("Q", value))
 
 	def readString(self, addr, size=-1) -> str:
-		if size == -1:
+		if size == -1:  # read until NULL character
 			x = b""
 			y = b""
 			z = 0
