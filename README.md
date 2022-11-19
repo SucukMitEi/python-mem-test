@@ -1,6 +1,6 @@
-# Foobar
+# mem
 
-Foobar is a Python library for dealing with word pluralization.
+mem is a Python package which allows you to memory editing with Python.
 
 ## Installation instructions
 
