@@ -1,2 +1,4 @@
 *.pyc
 mem/__pycache__
+build
+*.egg_info
