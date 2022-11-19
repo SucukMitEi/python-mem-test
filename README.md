@@ -1,10 +1,10 @@
 # mem
 
-mem is a Python package which allows you to memory editing with Python.
+mem is a Python package for memory editing with Python on Linux.
 
 ## Installation instructions
 
-1.
+1. 
 2.
 
 ## Usage
