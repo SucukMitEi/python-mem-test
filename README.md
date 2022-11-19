@@ -16,7 +16,7 @@ from mem import MEM
 # open a process
 mem = MEM(12345) # by PID
 # or
-mem = MEM.fromName("konsole") # by name
+mem = MEM.fromName("game") # by name
 
 value = mem.readInt(0x7fffffff)
 print(value)
