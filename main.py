@@ -1,6 +1,4 @@
 from mem import MEM
-from psutil import process_iter
-import random
 
 mem = MEM.fromName("konsole")
 
