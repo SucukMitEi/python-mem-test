@@ -1,8 +1,14 @@
 from mem import MEM
 from psutil import process_iter
-
+import random
 
 mem = MEM.fromName("konsole")
+while True:
+	randmap = random.choice(mem.maps)
 
-# TODO
-print(mem.readString(0x7f9f13281000, 10))
+	print(
+		mem.readString(
+			randmap[0],
+			randmap[1]-randmap[0]
+		)
+	)
