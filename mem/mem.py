@@ -42,13 +42,19 @@ class MEM:
 		self.mapfd = open(f"/proc/{pid}/maps", "r")
 
 		self.maps = []
-		for match in re.findall(r"([a-f0-9]+)-([a-f0-9]+) (...)", self.mapfd.read().strip()):
-			match = list(match)
-			match[0] = int(match[0], base=16)
-			match[1] = int(match[1], base=16)
-			match[2] = [i for i in match[2] if i != "-"]
+		for line in self.mapfd.read().strip().split("\n"):
+			line = re.split(r" +", line)
+			# print(line)
 
-			self.maps.append(match)
+			_from, to = [int(i, base=16) for i in line[0].split("-")]
+			# print(_from, to)
+			
+			rights = [i for i in line[1][:-1].split() if i != "-"]
+			
+			if "[" in line[5]:
+				continue
+
+			self.maps.append([_from, to, rights])
 
 	@classmethod
 	def fromName(cls, name):
@@ -68,6 +74,7 @@ class MEM:
 		# print(self.addrValid(addr, size, "r"))
 		if not self.addrValid(addr, size, "r"):
 			raise MemoryError("You can not read this address.")
+		print(addr, type(addr))
 		self.memfd.seek(addr)
 		return self.memfd.read(size)
 
