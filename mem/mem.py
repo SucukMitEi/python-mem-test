@@ -44,14 +44,11 @@ class MEM:
 		self.maps = []
 		for line in self.mapfd.read().strip().split("\n"):
 			line = re.split(r" +", line)
-			# print(line)
 
 			_from, to = [int(i, base=16) for i in line[0].split("-")]
-			# print(_from, to)
-			
 			rights = [i for i in line[1][:-1].split() if i != "-"]
-			
-			if "[" in line[5]:
+
+			if "[" in line[5]:  # heap, stack, vvar, vdso, vsyscall
 				continue
 
 			self.maps.append([_from, to, rights])
@@ -74,7 +71,7 @@ class MEM:
 		# print(self.addrValid(addr, size, "r"))
 		if not self.addrValid(addr, size, "r"):
 			raise MemoryError("You can not read this address.")
-		print(addr, type(addr))
+
 		self.memfd.seek(addr)
 		return self.memfd.read(size)
 
