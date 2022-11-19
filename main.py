@@ -3,12 +3,8 @@ from psutil import process_iter
 import random
 
 mem = MEM.fromName("konsole")
-while True:
-	randmap = random.choice(mem.maps)
 
+for map in mem.maps:
 	print(
-		mem.readString(
-			randmap[0],
-			randmap[1]-randmap[0]
-		)
+		mem.readString(map[0], map[1])
 	)
