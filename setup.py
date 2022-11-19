@@ -6,5 +6,4 @@ setup(
 	description="Memory editing on Linux with Python",
 	author="SucukMitEi",
 	packages=["mem"],
-	install_requires=["shutil"]
 )
