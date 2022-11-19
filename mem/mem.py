@@ -4,7 +4,15 @@ import re
 from psutil import process_iter
 
 
-class MemoryError(Exception):
+class MemoryReadException(Exception):
+	pass
+
+
+class MemoryWriteException(Exception):
+	pass
+
+
+class ProcessNotFoundException(Exception):
 	pass
 
 
@@ -46,8 +54,8 @@ class MEM:
 			line = re.split(r" +", line)
 
 			_from, to = [int(i, base=16) for i in line[0].split("-")]
-			rights = [i for i in line[1][:-1].split() if i != "-"]
-
+			rights = [i for i in list(line[1][:-1]) if i != "-"]
+			print(rights)
 			if "[" in line[5]:  # heap, stack, vvar, vdso, vsyscall
 				continue
 
@@ -58,6 +66,7 @@ class MEM:
 		for proc in process_iter():
 			if proc.name() == name:
 				return cls(proc.pid)
+		raise ProcessNotFoundException(f"Couldn't find process {name}")
 
 	def addrValid(self, addr, size, right):
 		for _range in self.maps:
@@ -73,7 +82,7 @@ class MEM:
 	def readBytes(self, addr, size) -> List[Byte]:
 		# check if address `addr` is valid for reading `size` bytes
 		if not self.addrValid(addr, size, "r"):
-			raise MemoryError("You can not read this address.")
+			raise MemoryReadException("You can not read this address.")
 
 		# set position to `addr`
 		self.memfd.seek(addr)
@@ -84,7 +93,7 @@ class MEM:
 	def writeBytes(self, addr, content) -> None:
 		# check if address `addr` is valid for writing `size` bytes
 		if not self.addrValid(addr, len(content), "w"):
-			raise MemoryError("You can not read this address.")
+			raise MemoryWriteException("You can not read this address.")
 
 		# set position to `addr`
 		self.memfd.seek(addr)
@@ -105,13 +114,13 @@ class MEM:
 		self.writeBytes(addr, struct.pack("I", value))
 
 	def readInt64(self, addr) -> Int64:
-		return struct.unpack("q", self.readBytes(addr, 4))[0]
+		return struct.unpack("q", self.readBytes(addr, 8))[0]
 
 	def writeInt64(self, addr, value):
 		self.writeBytes(addr, struct.pack("q", value))
 
 	def readUInt64(self, addr) -> UInt64:
-		return struct.unpack("Q", self.readBytes(addr, 4))[0]
+		return struct.unpack("Q", self.readBytes(addr, 8))[0]
 
 	def writeUInt64(self, addr, value):
 		self.writeBytes(addr, struct.pack("Q", value))
