@@ -1,7 +1,7 @@
-import struct
 from typing import List
-import re
+from re import split
 from psutil import process_iter
+from struct import pack, unpack
 
 
 class MemoryReadException(Exception):
@@ -51,7 +51,7 @@ class MEM:
 
 		self.maps = []
 		for line in self.mapfd.read().strip().split("\n"):
-			line = re.split(r" +", line)
+			line = split(r" +", line)
 
 			_from, to = [int(i, base=16) for i in line[0].split("-")]
 			rights = [i for i in list(line[1][:-1]) if i != "-"]
@@ -102,28 +102,28 @@ class MEM:
 		self.memfd.write(content)
 
 	def readInt32(self, addr) -> Int32:
-		return struct.unpack("i", self.readBytes(addr, 4))[0]
+		return unpack("i", self.readBytes(addr, 4))[0]
 
 	def writeInt32(self, addr, value):
-		self.writeBytes(addr, struct.pack("i", value))
+		self.writeBytes(addr, pack("i", value))
 
 	def readUInt32(self, addr) -> UInt32:
-		return struct.unpack("I", self.readBytes(addr, 4))[0]
+		return unpack("I", self.readBytes(addr, 4))[0]
 
 	def writeUInt32(self, addr, value):
-		self.writeBytes(addr, struct.pack("I", value))
+		self.writeBytes(addr, pack("I", value))
 
 	def readInt64(self, addr) -> Int64:
-		return struct.unpack("q", self.readBytes(addr, 8))[0]
+		return unpack("q", self.readBytes(addr, 8))[0]
 
 	def writeInt64(self, addr, value):
-		self.writeBytes(addr, struct.pack("q", value))
+		self.writeBytes(addr, pack("q", value))
 
 	def readUInt64(self, addr) -> UInt64:
-		return struct.unpack("Q", self.readBytes(addr, 8))[0]
+		return unpack("Q", self.readBytes(addr, 8))[0]
 
 	def writeUInt64(self, addr, value):
-		self.writeBytes(addr, struct.pack("Q", value))
+		self.writeBytes(addr, pack("Q", value))
 
 	def readString(self, addr, size=-1) -> str:
 		if size == -1:  # read until NULL character
