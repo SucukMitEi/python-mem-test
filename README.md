@@ -23,7 +23,7 @@ print(value)
 
 ## Contributing
 
-If you want, you can make a pull request if you want to change something or add something.
+You can make a pull request if you want to change something or add something.
 
 ## License
 
