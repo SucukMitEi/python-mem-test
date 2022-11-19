@@ -3,3 +3,4 @@ mem/__pycache__
 build
 *.egg-info
 .vscode
+monkeytype.sqlite3
