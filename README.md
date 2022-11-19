@@ -25,6 +25,9 @@ print(value)
 ## Running
 Run the file with `sudo python3 myfile.py`
 
+## Examples
+There are two examples in the examples folder.
+
 ## Contributing
 
 You can make a pull request if you want to change something or add something.
