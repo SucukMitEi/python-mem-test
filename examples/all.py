@@ -4,7 +4,6 @@ mem = MEM.fromName("konsole")
 
 for map in mem.maps:
 	print(
-
 		f"""Map: {map}
 
 First 4 Bytes: {mem.readBytes(map[0], 4)}
