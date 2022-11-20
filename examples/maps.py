@@ -7,4 +7,3 @@ for map in mem.maps:
 To: {hex(map[1])[2:]}
 Rights: {", ".join(map[2])}
 """)
-	
