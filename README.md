@@ -37,10 +37,6 @@ Run the file with `sudo python3 myfile.py`
 
 There are two examples in the examples folder.
 
-## Contributing
-
-You can make a pull request if you want to change something or add something.
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
